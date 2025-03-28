@@ -13,7 +13,7 @@ from echo_synth.tools import (
 
 @CrewBase
 class AudioProcessingCrew():
-    """EchoSynth crew"""
+    """AudioProcessing crew"""
 
     # Learn more about YAML configuration files here:
     # Agents: https://docs.crewai.com/concepts/agents#yaml-configuration-recommended

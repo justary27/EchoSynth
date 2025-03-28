@@ -6,7 +6,7 @@ from pydantic import BaseModel
 from crewai.flow.flow import Flow, listen, start
 from crewai.tasks import TaskOutput
 
-from echo_synth.crews import AudioProcessingCrew, EmailSendingCrew
+from echo_synth.crews import AudioProcessingCrew, JsonSavingCrew
 
 
 class EchoSynthState(BaseModel):
@@ -17,7 +17,7 @@ class EchoSynthState(BaseModel):
     summary_text: str = ""
     summary_for_image: str = ""
     
-    email_sent: bool = False
+    json_file_path: str = ""
 
 
 class EchoSynthFlow(Flow[EchoSynthState]):
@@ -61,27 +61,66 @@ class EchoSynthFlow(Flow[EchoSynthState]):
             self.state.image_file = self._get_task_output_by_name(results, "create_image")
             
             print("=== AUDIO PROCESSING COMPLETE ===")
-            print(f"State after processing: {self.state}")
             
         except Exception as e:
             print(f"Error in process_audio: {e}")
             print(traceback.format_exc())
             raise
 
-    @listen(process_audio)
-    def send_email(self) -> None:
-        print("Sending email with results...")
 
-    @listen(send_email)
+    @listen(process_audio)
+    def save_output(self) -> None:
+        """
+        Save the state data to a JSON file using the JsonSavingCrew
+        """
+        try:
+            print("=== STARTING JSON SAVING ===")
+            
+            json_crew = JsonSavingCrew().crew()
+            
+            # Convert state to dictionary for the crew and add the flow ID
+            state_dict = self.state.model_dump()
+            state_dict["id"] = self.state.id
+            
+            # Run the crew with the state data
+            results = json_crew.kickoff(
+                inputs={
+                    "state_data": state_dict,
+                    "file_id": self.state.id
+                }
+            ).tasks_output
+            
+            # Get the json file path from the results
+            self.state.json_file_path = self._get_task_output_by_name(results, "save_to_json")
+            
+            print("=== JSON SAVING COMPLETE ===")
+            
+        except Exception as e:
+            print(f"Error in save_output: {e}")
+            print(traceback.format_exc())
+            raise
+    
+
+    @listen(save_output)
     def show_results(self) -> None:
         # Print summary of results
-        print("\n--- EchoSynth Flow Complete ---")
-        print(f"Audio processed: {self.audio_file_path}")
-        print(f"Transcription length: {len(self.state.transcribed_text)} characters")
-        print(f"Speech length: {len(self.state.speech_text)} characters")
-        print(f"Summary length: {len(self.state.summary_text)} characters")
-        print(f"Image generated: {'Yes' if self.state.image_file else 'No'}")
-        print(f"Email sent: {'Yes' if self.state.email_sent else 'No'}")
+        print("\n=== RESULTS ===\n")
+
+        print(f"AUDIO FILE: {self.audio_file_path}")
+        print("\n=========================================\n")
+        print(f"TRANSCRIPTION: {self.state.transcribed_text}")
+        print("\n=========================================\n")
+        print(f"SPEECH OUTPUT: {self.state.speech_text}")
+        print("\n=========================================\n")
+        print(f"SUMMARY OUTPUT: {self.state.summary_text}")
+        print("\n=========================================\n")
+        print(f"IMAGE SUMMARY OUTPUT: {self.state.summary_for_image}")
+        print("\n=========================================\n")
+        print(f"IMAGE OUTPUT: {self.state.image_file}")
+        print("\n=========================================\n")
+        print(f"JSON OUTPUT: {self.state.json_file_path}")
+        print("\n=========================================\n")
+
 
     def _get_task_output_by_name(self, tasks_output: List[TaskOutput], task_name):
         """

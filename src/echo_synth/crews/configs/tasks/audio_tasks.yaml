@@ -2,11 +2,11 @@ convert_audio_to_text:
   description: >
     Transcribe the provided audio file into written text. Pay attention to accuracy,
     speaker differentiation, and include relevant non-verbal audio context when appropriate.
-    Identify the main themes and tone of the content.
+    Identify the main themes and tone of the content. Audio file path: {audio_file_path}
   expected_output: >
     A complete, accurate transcription of the audio file with timestamps and speaker
     identification where applicable. Include a brief note about the overall tone and
-    key themes detected in the content. Audio file path: {audio_file_path}
+    key themes detected in the content.
   agent: "audio_to_text_transcriber"
 
 write_speech:
