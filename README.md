@@ -1,55 +1,168 @@
-# EchoSynth
-An audio processing agent which can do several tasks
+# EchoSynth 🎙️➡️📝🖼️
 
-Welcome to the EchoSynth Crew project, powered by [crewAI](https://crewai.com). This template is designed to help you set up a multi-agent AI system with ease, leveraging the powerful and flexible framework provided by crewAI. Our goal is to enable your agents to collaborate effectively on complex tasks, maximizing their collective intelligence and capabilities.
+## Repository Description
+EchoSynth is an intelligent audio processing pipeline that transforms spoken content into polished text and visual representations using AI agents. Built with CrewAI, it seamlessly transcribes audio, refines speech content, generates summaries, and creates matching images—all orchestrated through an agent-based workflow architecture.
 
-## Installation
+## Tags
+`ai-agents`, `audio-processing`, `transcription`, `text-generation`, `image-generation`, `crewai`, `openai`, `whisper`, `dalle`, `agent-based-workflows`
 
-Ensure you have Python >=3.10 <3.13 installed on your system. This project uses [UV](https://docs.astral.sh/uv/) for dependency management and package handling, offering a seamless setup and execution experience.
+---
 
-First, if you haven't already, install uv:
+# EchoSynth: AI-Powered Audio Processing Pipeline
 
-```bash
-pip install uv
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![CrewAI](https://img.shields.io/badge/CrewAI-Powered-green.svg)](https://github.com/joaomdmoura/crewai)
+
+EchoSynth transforms audio content into refined text and visual assets through a coordinated team of AI agents. It's designed for podcasters, content creators, educators, and anyone working with spoken media who wants to automatically generate high-quality derivative content.
+
+## 🌟 Features
+
+- **Audio Transcription** - Accurate text conversion from various audio formats
+- **Speech Refinement** - Transforms raw transcripts into polished speeches
+- **Smart Summarization** - Creates concise text summaries capturing key points
+- **Image Generation** - Produces relevant visuals that match content themes
+- **Coordinated AI Agents** - Specialized AI agents working together via CrewAI
+- **Flexible Pipeline** - Modular architecture that supports customization
+- **Email Integration** - Optional email delivery of processed content
+
+## 🛠️ Tech Stack
+
+- **[CrewAI](https://github.com/joaomdmoura/crewai)** - Agent orchestration framework
+- **[OpenAI Whisper](https://openai.com/research/whisper)** - Speech-to-text transcription
+- **[OpenAI GPT-4o](https://openai.com/gpt-4)** - Text processing and refinement
+- **[OpenAI DALL-E 3](https://openai.com/dall-e-3)** - Image generation
+- **Python 3.9+** - Core programming language
+
+## 📋 Prerequisites
+
+- Python 3.9 or higher
+- OpenAI API key with access to Whisper, GPT-4, and DALL-E models
+- Audio files (.mp3, .mp4, .mpeg, .mpga, .m4a, .wav, or .webm)
+
+## 🚀 Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/EchoSynth.git
+   cd EchoSynth
+   ```
+
+2. Create and activate a virtual environment:
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   ```
+
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Set up your environment variables:
+   ```bash
+   export OPENAI_API_KEY="your_openai_api_key_here"
+   ```
+
+## 💻 Usage
+
+### Basic Example
+
+```python
+from echo_synth.flows import EchoSynthFlow
+
+# Initialize the flow with your audio file
+flow = EchoSynthFlow(audio_file_path="data/your_audio_file.mp3")
+
+# Run the processing pipeline
+flow.run()
+
+# Access the results
+transcription = flow.state.transcribed_text
+speech = flow.state.speech_text
+summary = flow.state.summary_text
+image_path = flow.state.image_file
+
+print(f"Processed {flow.audio_file_path}")
+print(f"Generated image saved to: {image_path}")
 ```
 
-Next, navigate to your project directory and install the dependencies:
+### Using Environment Variables
 
-(Optional) Lock the dependencies and install them by using the CLI command:
-```bash
-crewai install
-```
-### Customizing
-
-**Add your `OPENAI_API_KEY` into the `.env` file**
-
-- Modify `src/echo_synth/config/agents.yaml` to define your agents
-- Modify `src/echo_synth/config/tasks.yaml` to define your tasks
-- Modify `src/echo_synth/crew.py` to add your own logic, tools and specific args
-- Modify `src/echo_synth/main.py` to add custom inputs for your agents and tasks
-
-## Running the Project
-
-To kickstart your crew of AI agents and begin task execution, run this from the root folder of your project:
+You can also set the audio file path via environment variables:
 
 ```bash
-$ crewai run
+export AUDIO_FILE_PATH="data/your_audio_file.mp3"
 ```
 
-This command initializes the echo-synth Crew, assembling the agents and assigning them tasks as defined in your configuration.
+```python
+from echo_synth.flows import EchoSynthFlow
 
-This example, unmodified, will run the create a `report.md` file with the output of a research on LLMs in the root folder.
+# The audio path will be read from environment variables
+flow = EchoSynthFlow()
+flow.run()
+```
 
-## Understanding Your Crew
+## 🧠 Architecture
 
-The echo-synth Crew is composed of multiple AI agents, each with unique roles, goals, and tools. These agents collaborate on a series of tasks, defined in `config/tasks.yaml`, leveraging their collective skills to achieve complex objectives. The `config/agents.yaml` file outlines the capabilities and configurations of each agent in your crew.
+EchoSynth uses a multi-agent architecture powered by CrewAI:
 
-## Support
+1. **Audio-to-Text Transcriber Agent** - Converts audio to accurate text using Whisper API
+2. **Speech Writer Agent** - Refines raw transcripts into polished, structured speech
+3. **Image Summary Writer Agent** - Creates descriptive content for image generation
+4. **Summary Writer Agent** - Produces concise summaries of the key content
+5. **Image Painter Agent** - Generates visual representations using DALL-E
 
-For support, questions, or feedback regarding the EchoSynth Crew or crewAI.
-- Visit our [documentation](https://docs.crewai.com)
-- Reach out to us through our [GitHub repository](https://github.com/joaomdmoura/crewai)
-- [Join our Discord](https://discord.com/invite/X4JWnZnxPb)
-- [Chat with our docs](https://chatg.pt/DWjSBZn)
+The flow is coordinated through CrewAI's sequential pipeline, ensuring each agent receives the proper inputs from previous steps.
 
-Let's create wonders together with the power and simplicity of crewAI.
+## 📁 Project Structure
+
+```
+EchoSynth/
+├── configs/
+│   ├── agents/           # Agent configuration YAML files
+│   └── tasks/            # Task configuration YAML files
+├── data/                 # Directory for audio files
+├── src/
+│   └── echo_synth/
+│       ├── agents/       # Agent implementations
+│       ├── crews/        # CrewAI crew definitions
+│       ├── flows/        # Flow orchestration logic
+│       └── tools/        # Custom tools (Whisper, DALL-E, etc.)
+├── tests/                # Unit and integration tests
+├── .env.example          # Example environment variables
+├── LICENSE               # MIT License
+├── README.md             # Project documentation
+└── requirements.txt      # Python dependencies
+```
+
+## 🔍 Troubleshooting
+
+### Common Issues:
+
+#### Audio File Not Found
+Ensure your audio file exists and the path is correct. EchoSynth will search in:
+- The absolute path provided
+- The current working directory
+- A `data/` subdirectory in the working directory
+
+#### API Key Issues
+Make sure your OPENAI_API_KEY environment variable is correctly set and has access to the required models.
+
+#### File Size Limits
+OpenAI's Whisper API has a 25MB file size limit. For larger files, consider splitting them or using a different method.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
