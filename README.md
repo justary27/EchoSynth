@@ -105,27 +105,6 @@ EchoSynth uses a multi-agent architecture powered by CrewAI:
 
 The flow is coordinated through CrewAI's sequential pipeline, ensuring each agent receives the proper inputs from previous steps.
 
-## 📁 Project Structure
-
-```
-EchoSynth/
-├── configs/
-│   ├── agents/           # Agent configuration YAML files
-│   └── tasks/            # Task configuration YAML files
-├── data/                 # Directory for audio files
-├── src/
-│   └── echo_synth/
-│       ├── agents/       # Agent implementations
-│       ├── crews/        # CrewAI crew definitions
-│       ├── flows/        # Flow orchestration logic
-│       └── tools/        # Custom tools (Whisper, DALL-E, etc.)
-├── tests/                # Unit and integration tests
-├── .env.example          # Example environment variables
-├── LICENSE               # MIT License
-├── README.md             # Project documentation
-└── requirements.txt      # Python dependencies
-```
-
 ## 🔍 Troubleshooting
 
 ### Common Issues:
