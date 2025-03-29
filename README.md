@@ -95,15 +95,8 @@ flow.run()
 
 ## 🧠 Architecture
 
-EchoSynth uses a multi-agent architecture powered by CrewAI:
+![image](https://github.com/user-attachments/assets/ee64e336-69b0-4d20-8878-1630cc4b9c13)
 
-1. **Audio-to-Text Transcriber Agent** - Converts audio to accurate text using Whisper API
-2. **Speech Writer Agent** - Refines raw transcripts into polished, structured speech
-3. **Image Summary Writer Agent** - Creates descriptive content for image generation
-4. **Summary Writer Agent** - Produces concise summaries of the key content
-5. **Image Painter Agent** - Generates visual representations using DALL-E
-
-The flow is coordinated through CrewAI's sequential pipeline, ensuring each agent receives the proper inputs from previous steps.
 
 ## 🔍 Troubleshooting
 
