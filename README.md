@@ -14,7 +14,7 @@ EchoSynth transforms audio content into refined text and visual assets through a
 - **Image Generation** - Produces relevant visuals that match content themes
 - **Coordinated AI Agents** - Specialized AI agents working together via CrewAI
 - **Flexible Pipeline** - Modular architecture that supports customization
-- **Email Integration** - Optional email delivery of processed content
+- **JSON Output** - Saves all generated content in structured JSON format
 
 ## 🛠️ Tech Stack
 
@@ -72,9 +72,11 @@ transcription = flow.state.transcribed_text
 speech = flow.state.speech_text
 summary = flow.state.summary_text
 image_path = flow.state.image_file
+results_json = flow.state.results_json
 
 print(f"Processed {flow.audio_file_path}")
 print(f"Generated image saved to: {image_path}")
+print(f"Results JSON saved to: {results_json}")
 ```
 
 ### Using Environment Variables
@@ -95,8 +97,25 @@ flow.run()
 
 ## 🧠 Architecture
 
-![image](https://github.com/user-attachments/assets/ee64e336-69b0-4d20-8878-1630cc4b9c13)
+![EchoSynth Architecture](https://github.com/user-attachments/assets/ee64e336-69b0-4d20-8878-1630cc4b9c13)
 
+EchoSynth uses a multi-agent architecture powered by CrewAI:
+
+1. **Agent 1 (Text Transcribe)** - Converts audio to accurate text using Whisper API
+2. **Agent 2 (Speech Writer)** - Refines raw transcripts into polished, structured speech
+3. **Agent 3 (Summary for Image)** - Creates descriptive content for image generation
+4. **Agent 4 (Summarizer)** - Produces concise summaries of the key content
+5. **Agent 5 (Generate Image)** - Creates visual representations using DALL-E
+6. **Agent 6 (Save data to JSON)** - Compiles all outputs into a structured JSON file
+
+The flow is coordinated through CrewAI's sequential pipeline, ensuring each agent receives the proper inputs from previous steps and all results are saved in a structured format.
+
+### Tools Used by Agents:
+
+- **Tool 1 (Whisper STT)** - Used by Agent 1 for transcription
+- **Tool 2 (Sentiment Analysis)** - Used by Agent 1 for audio content analysis
+- **Tool 3 (DALL-E)** - Used by Agent 5 for image generation
+- **Tool 4 (FileWriter)** - Used by Agent 6 to save outputs to JSON
 
 ## 🔍 Troubleshooting
 
@@ -114,6 +133,12 @@ Make sure your OPENAI_API_KEY environment variable is correctly set and has acce
 #### File Size Limits
 OpenAI's Whisper API has a 25MB file size limit. For larger files, consider splitting them or using a different method.
 
+#### JSON Output
+If you encounter issues with JSON output:
+- Check that all agent outputs are valid and complete
+- Ensure the FileWriter tool has proper permissions to write to the output directory
+- Verify the JSON structure matches your expected schema
+
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
@@ -127,4 +152,3 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## 📄 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
