@@ -1,15 +1,5 @@
 # EchoSynth 🎙️➡️📝🖼️
 
-## Repository Description
-EchoSynth is an intelligent audio processing pipeline that transforms spoken content into polished text and visual representations using AI agents. Built with CrewAI, it seamlessly transcribes audio, refines speech content, generates summaries, and creates matching images—all orchestrated through an agent-based workflow architecture.
-
-## Tags
-`ai-agents`, `audio-processing`, `transcription`, `text-generation`, `image-generation`, `crewai`, `openai`, `whisper`, `dalle`, `agent-based-workflows`
-
----
-
-# EchoSynth: AI-Powered Audio Processing Pipeline
-
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![CrewAI](https://img.shields.io/badge/CrewAI-Powered-green.svg)](https://github.com/joaomdmoura/crewai)
